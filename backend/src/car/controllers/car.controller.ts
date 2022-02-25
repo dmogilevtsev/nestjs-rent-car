@@ -1,8 +1,8 @@
-import { CreateSessionDto } from './../dto/create-session.dto';
 import { Controller, Get, Param, Query } from '@nestjs/common';
 
-import { ICar } from './../entities/car.interface';
+import { CreateSessionDto } from './../dto/create-session.dto';
 import { CarService } from './../services/car.service';
+import { ICar } from './../entities/car.interface';
 
 @Controller('car')
 export class CarController {
@@ -14,7 +14,8 @@ export class CarController {
 
     @Get('rent-price')
     async rentPrice(
-        @Query() createSessionDto: CreateSessionDto,
+        @Query()
+        createSessionDto: CreateSessionDto,
     ): Promise<number> {
         return await this.carService.rentPrice(createSessionDto);
     }
