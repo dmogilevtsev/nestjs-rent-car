@@ -1,13 +1,10 @@
-import { MAX_DAY } from './../constants';
-import { ReportService } from './report.service';
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { Controller, Get, Res, Query } from '@nestjs/common';
 import { Response } from 'express';
-import { GetReportParamsDto } from './dto/get-report-params.dto';
 import { addDays } from 'date-fns';
+
+import { MAX_DAY } from './../constants';
+import { ReportService } from './report.service';
+import { GetReportParamsDto } from './dto/get-report-params.dto';
 
 @Controller('report')
 export class ReportController {
