@@ -37,10 +37,7 @@ export class ReportService {
         return res;
     }
 
-    async report(
-        dt_from: Date = addDays(new Date(), -30),
-        dt_to: Date = new Date(),
-    ) {
+    async report(dt_from: Date, dt_to: Date) {
         const data = await this.averageCarLoadByDay(dt_from, dt_to);
         const diff = Math.abs(differenceInDays(dt_from, dt_to));
         const result: IResultAvgCar[] = [];
