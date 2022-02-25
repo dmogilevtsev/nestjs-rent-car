@@ -13,21 +13,25 @@ services:
       - ./pgdata:/var/lib/postgresql/data
     ports:
       - ${PG_PORT}:${PG_PORT}
-  backend:
-    container_name: rent-car-backend
-    build:
-      context: ./backend
-    depends_on:
-      - db
-    restart: unless-stopped
-    ports:
-      - '${API_PORT}:${API_PORT}'
-    environment:
-      - API_PORT=${API_PORT}
-      - API_HOST=${API_HOST}
-      - PG_CONNECTION=${PG_CONNECTION}
-      - PG_USERNAME=${PG_USERNAME}
-      - PG_PASSWORD=${PG_PASSWORD}
-      - PG_DATABASE=${PG_DATABASE}
-      - PG_PORT=${PG_PORT}
-      - PG_HOST=db
+    healthcheck:
+      test: curl -sS http://127.0.0.1 || echo 1
+      interval: 5s
+    backend:
+      container_name: rent-car-backend
+      build:
+        context: ./backend
+      depends_on:
+        db:
+          condition: service_healthy
+      restart: unless-stopped
+      ports:
+        - '${API_PORT}:${API_PORT}'
+      environment:
+        - API_PORT=${API_PORT}
+        - API_HOST=${API_HOST}
+        - PG_CONNECTION=${PG_CONNECTION}
+        - PG_USERNAME=${PG_USERNAME}
+        - PG_PASSWORD=${PG_PASSWORD}
+        - PG_DATABASE=${PG_DATABASE}
+        - PG_PORT=${PG_PORT}
+        - PG_HOST=db
