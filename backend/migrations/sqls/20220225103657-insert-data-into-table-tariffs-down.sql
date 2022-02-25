@@ -1,6 +1,6 @@
 /* Replace with your SQL commands */
 DELETE
 FROM
-    cars
+    tariffs
 WHERE
-    brand = 'Audi';
+    id IN (1, 2, 3);

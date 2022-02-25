@@ -5,7 +5,3 @@ CREATE TABLE
         price FLOAT NOT NULL,
         kmPerDay INTEGER NOT NULL
     );
-
-INSERT INTO
-    tariffs (price, kmPerDay)
-VALUES (270, 200), (330, 350), (390, 500);
