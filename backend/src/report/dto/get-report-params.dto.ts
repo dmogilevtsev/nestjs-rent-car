@@ -1,4 +1,4 @@
 export class GetReportParamsDto {
-    dt_from: Date = null;
-    dt_to: Date = null;
+    dt_from: Date;
+    dt_to: Date;
 }
