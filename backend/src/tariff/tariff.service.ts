@@ -14,7 +14,16 @@ export class TariffService {
             const result = await this.db.executeQuery<ITariff>(getTariff, [id]);
             return result[0];
         } catch (error) {
-            this.log.warn('[getAllTariff]', error);
+            this.log.warn('[getOneTariff]', error);
+        }
+    }
+
+    async getAllTariffs(): Promise<ITariff[]> {
+        try {
+            const getTariff = /* sql */ `select * from tariffs;`;
+            return await this.db.executeQuery<ITariff>(getTariff);
+        } catch (error) {
+            this.log.warn('[getAllTariffs]', error);
         }
     }
 }
