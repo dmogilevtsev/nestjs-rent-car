@@ -19,7 +19,7 @@ export abstract class BaseRepository<T> implements IBaseRepository<T> {
         try {
             return await this.db.executeQuery<T>(query);
         } catch (error) {
-            this.log.warn(`Failary query (${query})`, error);
+            this.log.warn(`Query was failed (${query})`, error);
         }
     }
 
@@ -29,7 +29,7 @@ export abstract class BaseRepository<T> implements IBaseRepository<T> {
             const result = await this.db.executeQuery<T>(query, [id]);
             return result[0];
         } catch (error) {
-            this.log.warn('Failary query', error);
+            this.log.warn('Query was failed', error);
         }
     }
 }
