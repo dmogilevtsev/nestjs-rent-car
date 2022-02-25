@@ -8,15 +8,6 @@ export class TariffService {
     private readonly log: Logger = new Logger(TariffService.name);
     constructor(private readonly db: DatabaseService) {}
 
-    async getAllTariffs(): Promise<ITariff[]> {
-        try {
-            const getTariffs = /* sql */ `select * from tariffs;`;
-            return await this.db.executeQuery<ITariff>(getTariffs);
-        } catch (error) {
-            this.log.warn('[getAllTariffs]', error);
-        }
-    }
-
     async getOneTariff(id: number): Promise<ITariff> {
         try {
             const getTariff = /* sql */ `select * from tariffs where id=$1;`;
