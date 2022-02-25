@@ -1,18 +1,15 @@
+import { Controller, Get, Param } from '@nestjs/common';
+
 import { IDiscount } from './discount.interface';
 import { DiscountService } from './discount.service';
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
-import { Controller, Get, Param } from '@nestjs/common';
 
 @Controller('discount')
 export class DiscountController {
     constructor(private readonly service: DiscountService) {}
 
-    @Get(':count')
-    async getOne(@Param('count') count: number): Promise<IDiscount> {
-        return await this.service.getOneDiscount(count);
+    @Get(':count-days')
+    async getOne(@Param('count-days') countDays: number): Promise<IDiscount> {
+        return await this.service.getOneDiscount(countDays);
     }
 
     @Get()
