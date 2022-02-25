@@ -24,8 +24,10 @@ export interface IAverageCarLoadByDayResponse {
     car: string;
 }
 
-export interface IResultAvgCar {
-    id: number;
-    date: Date;
-    data: IAverageCarLoadByDayResponse[];
+export interface ICarWithDates {
+    [k: string]: {
+        dt_from: Date;
+        dt_to: Date;
+        car: string;
+    }[];
 }
