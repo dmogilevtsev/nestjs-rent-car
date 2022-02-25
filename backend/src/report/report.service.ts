@@ -13,7 +13,7 @@ export class ReportService {
 
     constructor(private readonly db: DatabaseService) {}
 
-    async AverageCarLoadByDay(
+    async averageCarLoadByDay(
         dt_from: Date,
         dt_to: Date,
     ): Promise<IAverageCarLoadByDayResponse[]> {
@@ -33,6 +33,7 @@ export class ReportService {
         `,
             [dt_from, dt_to],
         );
+        this.log.debug(res);
         return res;
     }
 
@@ -40,7 +41,7 @@ export class ReportService {
         dt_from: Date = addDays(new Date(), -30),
         dt_to: Date = new Date(),
     ) {
-        const data = await this.AverageCarLoadByDay(dt_from, dt_to);
+        const data = await this.averageCarLoadByDay(dt_from, dt_to);
         const diff = Math.abs(differenceInDays(dt_from, dt_to));
         const result: IResultAvgCar[] = [];
         for (let i = 1; i <= diff; i++) {
