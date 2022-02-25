@@ -73,7 +73,10 @@ const mockCarService = {
             ).length > 0 ||
             isWeekend(dt_from)
         ) {
-            throw new HttpException('Car for rent', HttpStatus.BAD_REQUEST);
+            throw new HttpException(
+                'This car is in rent now.',
+                HttpStatus.BAD_REQUEST,
+            );
         }
         return true;
     }),
@@ -140,10 +143,10 @@ describe('[CLASS] CarService', () => {
                 car_id = 3;
                 dt_from = new Date('2022-02-21');
             });
-            it('Should return error "Car for rent"', () => {
+            it('Should return error "This car is in rent now."', () => {
                 expect(() =>
                     carServiceMock.carIsAvailable(car_id, dt_from),
-                ).toThrow(/Car for rent/);
+                ).toThrow(/This car is in rent now./);
             });
         });
         describe('(2022-02-26)', () => {
@@ -151,10 +154,10 @@ describe('[CLASS] CarService', () => {
                 car_id = 3;
                 dt_from = new Date('2022-02-26');
             });
-            it('Should return error "Car for rent" becouse it weekend', () => {
+            it('Should return error "This car is in rent now." becouse it weekend', () => {
                 expect(() =>
                     carServiceMock.carIsAvailable(car_id, dt_from),
-                ).toThrow(/Car for rent/);
+                ).toThrow(/This car is in rent now./);
             });
         });
         describe('(2022-02-28)', () => {
