@@ -13,21 +13,21 @@ services:
       - ./pgdata:/var/lib/postgresql/data
     ports:
       - ${PG_PORT}:${PG_PORT}
-  # backend:
-  #   container_name: rent-car-backend
-  #   build:
-  #     context: ./backend
-  #   depends_on:
-  #     - db
-  #   restart: unless-stopped
-  #   ports:
-  #     - '${API_PORT}:${API_PORT}'
-  #   environment:
-  #     - API_PORT=${API_PORT}
-  #     - API_HOST=${API_HOST}
-  #     - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
-  #     - TYPEORM_USERNAME=${TYPEORM_USERNAME}
-  #     - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
-  #     - TYPEORM_DATABASE=${TYPEORM_DATABASE}
-  #     - TYPEORM_PORT=${TYPEORM_PORT}
-  #     - TYPEORM_HOST=db
+  backend:
+    container_name: rent-car-backend
+    build:
+      context: ./backend
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    environment:
+      - API_PORT=${API_PORT}
+      - API_HOST=${API_HOST}
+      - TYPEORM_CONNECTION=${PG_CONNECTION}
+      - TYPEORM_USERNAME=${PG_USERNAME}
+      - TYPEORM_PASSWORD=${PG_PASSWORD}
+      - TYPEORM_DATABASE=${PG_DATABASE}
+      - TYPEORM_PORT=${PG_PORT}
+      - TYPEORM_HOST=db
