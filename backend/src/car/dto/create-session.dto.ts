@@ -1,14 +1,20 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateSessionDto {
-    // @IsDate({ message: 'Invalid date' })
+    @ApiProperty()
     @IsNotEmpty({ message: 'Date can not be null' })
     dt_from: Date;
 
-    // @IsDate({ message: 'Invalid date' })
+    @ApiProperty()
     @IsNotEmpty({ message: 'Date can not be null' })
     dt_to: Date;
 
+    @ApiProperty()
+    @IsNotEmpty()
     tariff_id: number;
+
+    @ApiProperty()
+    @IsNotEmpty()
     car_id: number;
 }
