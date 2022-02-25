@@ -1,11 +1,12 @@
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
+import { addDays, differenceInDays, format, isAfter, isBefore } from 'date-fns';
 
 import { DatabaseService } from './../db/database.service';
 import {
     IAverageCarLoadByDayResponse,
     ICarWithDates,
 } from './reposrt.interface';
-import { addDays, differenceInDays, format, isAfter, isBefore } from 'date-fns';
+import { MAX_DAY } from './../constants';
 
 @Injectable()
 export class ReportService {
@@ -17,10 +18,10 @@ export class ReportService {
         dt_from: Date,
         dt_to: Date,
     ): Promise<IAverageCarLoadByDayResponse[]> {
-        const diff = differenceInDays(dt_from, dt_to);
-        if (diff > 31) {
+        const diff = differenceInDays(dt_to, dt_from);
+        if (diff > MAX_DAY) {
             throw new HttpException(
-                'The maximum number of days must not exceed 30',
+                `The maximum number of days must not exceed ${MAX_DAY}`,
                 HttpStatus.BAD_REQUEST,
             );
         }
@@ -33,11 +34,16 @@ export class ReportService {
         `,
             [dt_from, dt_to],
         );
-        this.log.debug(res);
         return res;
     }
 
     async report(dt_from: Date, dt_to: Date) {
+        if (dt_from > dt_to) {
+            throw new HttpException(
+                'Date from can not be more then date to!',
+                HttpStatus.BAD_REQUEST,
+            );
+        }
         const data = await this.averageCarLoadByDay(dt_from, dt_to);
 
         // Array of date by period
@@ -159,7 +165,11 @@ function getHTMLTableThs(columns: Date[]) {
     return columns
         .map(
             el =>
-                `<th scope="col">${format(el, 'ccc')} ${format(el, 'dd')}</th>`,
+                `<th scope="col" class="${
+                    ['Sat', 'Sun'].includes(format(el, 'ccc'))
+                        ? 'text-danger'
+                        : ''
+                }">${format(el, 'ccc')} ${format(el, 'dd')}</th>`,
         )
         .join('');
 }
