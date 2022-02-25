@@ -6,6 +6,7 @@ https://docs.nestjs.com/controllers#controllers
 import { Controller, Get, Res, Query } from '@nestjs/common';
 import { Response } from 'express';
 import { GetReportParamsDto } from './dto/get-report-params.dto';
+import { addDays } from 'date-fns';
 
 @Controller('report')
 export class ReportController {
@@ -15,11 +16,10 @@ export class ReportController {
     async generateReport(
         @Res() res: Response,
         @Query() { dt_from, dt_to }: GetReportParamsDto,
-    ): Promise<any> {
-        const report = await this.reportService.report(
-            new Date(dt_from),
-            new Date(dt_to),
-        );
+    ): Promise<void> {
+        const dt1 = dt_from ? new Date(dt_from) : addDays(new Date(), -30);
+        const dt2 = dt_to ? new Date(dt_to) : new Date();
+        const report = await this.reportService.report(dt1, dt2);
         res.send(report);
     }
 }
