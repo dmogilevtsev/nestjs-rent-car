@@ -69,3 +69,6 @@ npm run test
 - SWAGGER on http://localhost:5000/swagger
 - REPORT on http://localhost:5000/report
 - REPORT by period on http://localhost:5000/report?dt_from=2022-02-13&dt_to=2022-02-28
+
+## Demonstration
+![gif](https://github.com/dmogilevtsev/nestjs-rent-car/blob/master/Rent%20Car.gif)
