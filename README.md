@@ -1,11 +1,11 @@
 # Nestjs Rent Car
 Backend-app for rent cars
-### Posibilities:
+## Posibilities:
 - REST-API
 - Generate Report
 - Docker
 
-### Technology stack
+## Technology stack
 <table width="100%">
   <tr>
     <td align="center" valign="middle" width="20%">
@@ -32,7 +32,7 @@ Backend-app for rent cars
   </tr>
 </table>
 
-### Start app
+## Start app
 1) Create `.env` file, example
 ```dotenv
 API_PORT=5000
@@ -49,6 +49,23 @@ PG_HOST=localhost
 docker-compose up -d
 ```
 
-### API
+<img height="80" alt="Postman" src="https://www.itsdelta.ru/upload/iblock/d41/d4164c9d28b9e2c11e347b5e477ab831.png"/>
+
+If you like test app with Postman - import `RENT CAR.postman_collection.json` to your Postman APP
+
+## TEST
+1) Clone this project to your repository
+2) Open in terminal and run command:
+```
+cd backend/
+npm install
+```
+3) Run test
+```
+npm run test
+```
+
+## API
 - SWAGGER on http://localhost:5000/swagger
 - REPORT on http://localhost:5000/report
+- REPORT by period on http://localhost:5000/report?dt_from=2022-02-13&dt_to=2022-02-28
