@@ -24,7 +24,7 @@ export class SessionService {
         car_id,
         tariff_id,
     }: CreateSessionDto): Promise<boolean> {
-        if (await this.carService.carAvailable(dt_from, dt_to, car_id)) {
+        if (await this.carService.carIsAvailable(car_id, dt_from)) {
             if (
                 new Date(dt_from).getDay() === 0 ||
                 new Date(dt_from).getDay() === 6 ||
