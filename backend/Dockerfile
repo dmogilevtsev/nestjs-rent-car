@@ -9,4 +9,4 @@ FROM node:14-alpine
 WORKDIR /app
 COPY --from=builder /app ./
 EXPOSE ${API_PORT}
-CMD ["db-migrate", "up", "&&", "npm", "run", "start:prod"]
+CMD ["npm", "run", "start:prod"]
