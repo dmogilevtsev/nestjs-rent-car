@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { differenceInDays, isWeekend } from 'date-fns';
 
 import { ISession } from './session.interface';
 import { DatabaseService } from './../db/database.service';
@@ -6,7 +7,6 @@ import { CreateSessionDto } from './../car/dto/create-session.dto';
 import { DiscountService } from './../discount/discount.service';
 import { CarService } from './../car/services/car.service';
 import { TariffService } from './../tariff/tariff.service';
-import { differenceInDays } from 'date-fns';
 
 @Injectable()
 export class SessionService {
@@ -24,42 +24,37 @@ export class SessionService {
         car_id,
         tariff_id,
     }: CreateSessionDto): Promise<boolean> {
-        if (await this.carService.carIsAvailable(car_id, dt_from)) {
-            if (
-                new Date(dt_from).getDay() === 0 ||
-                new Date(dt_from).getDay() === 6 ||
-                new Date(dt_to).getDay() === 0 ||
-                new Date(dt_to).getDay() === 6
-            ) {
-                // Начало и конец аренды не может выпадать на выходной день (суббота, воскресенье)
+        const dtFrom = new Date(dt_from);
+        const dtTo = new Date(dt_to);
+        if (await this.carService.carIsAvailable(car_id, dtFrom)) {
+            if (isWeekend(dtFrom) || isWeekend(dtTo)) {
                 throw new HttpException(
-                    `You can't book a car on weekends`,
+                    `You can't rent a car on weekends`,
                     HttpStatus.BAD_REQUEST,
                 );
             }
-            // Создаем сессию
             try {
                 if (!(await this.carService.getOneCar(car_id))) {
                     throw new HttpException(
-                        'Car exist',
+                        'Car with this id is absent in our database.',
                         HttpStatus.BAD_REQUEST,
                     );
                 }
                 if (!(await this.tariffService.getOneTariff(tariff_id))) {
                     throw new HttpException(
-                        'Tariff exist',
+                        'Tariff with this id is absent in our database.',
                         HttpStatus.BAD_REQUEST,
                     );
                 }
-                const countDays: number = differenceInDays(dt_from, dt_to);
+                const countDays: number = differenceInDays(dtFrom, dtTo);
                 const discount =
                     countDays > 2
                         ? await this.discountService.getOneDiscount(countDays)
                         : null;
                 const insertQuery = /* sql */ `insert into session(dt_from, dt_to, car_id, discount_id, tariff_id) values ($1, $2, $3, $4, $5);`;
                 await this.db.executeQuery<ISession>(insertQuery, [
-                    dt_from,
-                    dt_to,
+                    dtFrom,
+                    dtTo,
                     car_id,
                     discount?.id,
                     tariff_id,
