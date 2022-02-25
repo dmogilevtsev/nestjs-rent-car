@@ -6,6 +6,7 @@ import { CreateSessionDto } from './../dto/create-session.dto';
 import { TariffService } from './../../tariff/tariff.service';
 import { CarRepository } from './../car.repository';
 import { ICar } from './../entities/car.interface';
+import { MAX_DAY } from './../../constants';
 
 @Injectable()
 export class CarService {
@@ -28,17 +29,26 @@ export class CarService {
     }
 
     async rentPrice({
-        car_id,
         dt_from,
         dt_to,
         tariff_id,
+        car_id,
     }: CreateSessionDto): Promise<number | null> {
+        const dtFrom = new Date(dt_from);
+        const dtTo = new Date(dt_to);
+        if (dtFrom > dtTo) {
+            throw new HttpException(
+                'Date from can not be more then date to!',
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+
         if (
-            (await this.carIsAvailable(car_id, dt_from)) &&
-            this.periodLaseThenThirty(dt_from, dt_to) &&
-            !this.cannotBeRentedOnWeekends(dt_from, dt_to)
+            !this.cannotBeRentedOnWeekends(dtFrom, dtTo) &&
+            this.periodLaseThenThirty(dtFrom, dtTo) &&
+            (await this.carIsAvailable(car_id, dtFrom))
         ) {
-            const daysCount = differenceInDays(dt_from, dt_to);
+            const daysCount = differenceInDays(dtTo, dtFrom);
             const tariff = await this.tariffService.getOneTariff(tariff_id);
             const discount = await this.discountService.getOneDiscount(
                 daysCount,
@@ -62,7 +72,7 @@ export class CarService {
     }
 
     periodLaseThenThirty(dt_from: Date, dt_to: Date): boolean {
-        if (differenceInDays(dt_to, dt_from) > 30) {
+        if (differenceInDays(dt_to, dt_from) > MAX_DAY) {
             throw new HttpException(
                 'Maximum rental period exceeded',
                 HttpStatus.BAD_REQUEST,
