@@ -18,27 +18,22 @@
 							"urlencoded": [
 								{
 									"key": "dt_from",
-									"value": "2022-04-05",
+									"value": "2022-05-11",
 									"type": "text"
 								},
 								{
 									"key": "dt_to",
-									"value": "2022-04-06",
+									"value": "2022-05-18",
 									"type": "text"
 								},
 								{
 									"key": "car_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "discount_id",
-									"value": "",
+									"value": "3",
 									"type": "text"
 								},
 								{
 									"key": "tariff_id",
-									"value": "1",
+									"value": "2",
 									"type": "text"
 								}
 							]
