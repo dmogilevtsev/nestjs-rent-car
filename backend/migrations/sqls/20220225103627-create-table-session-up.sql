@@ -10,5 +10,6 @@ CREATE TABLE
             TIME ZONE NOT NULL,
             car_id INTEGER NOT NULL,
             tariff_id INTEGER NOT NULL,
-            discount_id INTEGER
+            discount_id INTEGER,
+            cost NUMERIC(18, 2)
     );
