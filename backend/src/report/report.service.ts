@@ -18,7 +18,7 @@ export class ReportService {
         dt_from: Date,
         dt_to: Date,
     ): Promise<IAverageCarLoadByDayResponse[]> {
-        const diff = differenceInDays(dt_to, dt_from);
+        const diff = differenceInDays(dt_to, dt_from) + 1;
         if (diff > MAX_DAY) {
             throw new HttpException(
                 `The maximum number of days must not exceed ${MAX_DAY}`,
