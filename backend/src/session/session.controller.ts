@@ -10,8 +10,8 @@ export class SessionController {
     @Post()
     async createSession(
         @Body() createSessionDto: CreateSessionDto,
-    ): Promise<any> {
-        await this.sessionService.createSession(createSessionDto);
+    ): Promise<ISession> {
+        return await this.sessionService.createSession(createSessionDto);
     }
 
     @Get(':id')
