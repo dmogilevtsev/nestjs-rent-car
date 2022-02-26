@@ -57,6 +57,7 @@ const carInSession: ISession[] = [
         dt_from: new Date('2022-02-21'),
         dt_to: new Date('2022-02-25'),
         tariff_id: 1,
+        cost: 1282.5,
     },
 ];
 
@@ -332,43 +333,6 @@ describe('[CLASS] CarService', () => {
                 expect(
                     carService.periodLaseThenThirty(dt_from, dt_to),
                 ).toBeTruthy();
-            });
-        });
-    });
-    describe('[METHOD] cannotBeRentedOnWeekends', () => {
-        let dt_from: Date;
-        let dt_to: Date;
-        describe('from 2022-02-26 is weekend', () => {
-            beforeEach(() => {
-                dt_from = new Date('2022-02-27');
-                dt_to = new Date('2022-04-04');
-            });
-            it('Should be true', () => {
-                expect(
-                    carService.cannotBeRentedOnWeekends(dt_from, dt_to),
-                ).toBeTruthy();
-            });
-        });
-        describe('to 2022-03-05 is weekend', () => {
-            beforeEach(() => {
-                dt_from = new Date('2022-02-25');
-                dt_to = new Date('2022-03-05');
-            });
-            it('Should be true', () => {
-                expect(
-                    carService.cannotBeRentedOnWeekends(dt_from, dt_to),
-                ).toBeTruthy();
-            });
-        });
-        describe('No weekend', () => {
-            beforeEach(() => {
-                dt_from = new Date('2022-02-25');
-                dt_to = new Date('2022-03-03');
-            });
-            it('Should be false', () => {
-                expect(
-                    carService.cannotBeRentedOnWeekends(dt_from, dt_to),
-                ).toBeFalsy();
             });
         });
     });
