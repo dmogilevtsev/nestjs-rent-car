@@ -44,11 +44,11 @@ export class CarService {
         }
 
         if (
-            !this.cannotBeRentedOnWeekends(dtFrom, dtTo) &&
+            (!isWeekend(dt_from) || !isWeekend(dt_to)) &&
             this.periodLaseThenThirty(dtFrom, dtTo) &&
             (await this.carIsAvailable(car_id, dtFrom))
         ) {
-            const daysCount = differenceInDays(dtTo, dtFrom);
+            const daysCount = differenceInDays(dtTo, dtFrom) + 1;
             const tariff = await this.tariffService.getOneTariff(tariff_id);
             const discount = await this.discountService.getOneDiscount(
                 daysCount,
@@ -65,23 +65,19 @@ export class CarService {
     calculateRentPrice(
         daysCount: number,
         price: number,
-        percent: number = null,
+        percent: number | null = null,
     ): number {
         const total = daysCount * price;
         return percent ? total - total * (percent / 100) : total;
     }
 
     periodLaseThenThirty(dt_from: Date, dt_to: Date): boolean {
-        if (differenceInDays(dt_to, dt_from) > MAX_DAY) {
+        if (differenceInDays(dt_to, dt_from) + 1 > MAX_DAY) {
             throw new HttpException(
                 'Maximum rental period exceeded',
                 HttpStatus.BAD_REQUEST,
             );
         }
         return true;
-    }
-
-    cannotBeRentedOnWeekends(dt_from: Date, dt_to: Date): boolean {
-        return isWeekend(dt_from) || isWeekend(dt_to);
     }
 }
