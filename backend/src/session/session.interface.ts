@@ -5,4 +5,5 @@ export interface ISession {
     car_id: number;
     tariff_id: number;
     discount_id: number;
+    cost: number;
 }
