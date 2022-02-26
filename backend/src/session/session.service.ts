@@ -23,9 +23,15 @@ export class SessionService {
         dt_to,
         car_id,
         tariff_id,
-    }: CreateSessionDto): Promise<boolean> {
+    }: CreateSessionDto): Promise<ISession> {
         const dtFrom = new Date(dt_from);
         const dtTo = new Date(dt_to);
+        if (dtFrom > dtTo) {
+            throw new HttpException(
+                'Date from can not be more then date to!',
+                HttpStatus.BAD_REQUEST,
+            );
+        }
         if (await this.carService.carIsAvailable(car_id, dtFrom)) {
             if (isWeekend(dtFrom) || isWeekend(dtTo)) {
                 throw new HttpException(
@@ -40,26 +46,37 @@ export class SessionService {
                         HttpStatus.BAD_REQUEST,
                     );
                 }
-                if (!(await this.tariffService.getOneTariff(tariff_id))) {
+                const tariff = await this.tariffService.getOneTariff(tariff_id);
+                if (!tariff) {
                     throw new HttpException(
                         'Tariff with this id is absent in our database.',
                         HttpStatus.BAD_REQUEST,
                     );
                 }
-                const countDays: number = differenceInDays(dtFrom, dtTo);
+                const countDays: number = differenceInDays(dtTo, dtFrom) + 1;
                 const discount =
                     countDays > 2
                         ? await this.discountService.getOneDiscount(countDays)
                         : null;
-                const insertQuery = /* sql */ `insert into session(dt_from, dt_to, car_id, discount_id, tariff_id) values ($1, $2, $3, $4, $5);`;
-                await this.db.executeQuery<ISession>(insertQuery, [
+                const cost = this.carService.calculateRentPrice(
+                    countDays,
+                    tariff.price,
+                    discount?.percent,
+                );
+                const sqlQuery = /* sql */ `
+                    insert into session(dt_from, dt_to, car_id, discount_id, tariff_id, cost) 
+                    values ($1, $2, $3, $4, $5, $6)
+                    RETURNING id, dt_from, dt_to, car_id, discount_id, tariff_id, cost;
+                `;
+                const result = await this.db.executeQuery<ISession>(sqlQuery, [
                     dtFrom,
                     dtTo,
                     car_id,
                     discount?.id,
                     tariff_id,
+                    cost,
                 ]);
-                return true;
+                return result[0];
             } catch (error) {
                 this.log.warn('[createSession (insert into session)]', error);
             }
