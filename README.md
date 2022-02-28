@@ -35,7 +35,7 @@ Backend-app for rent cars
 ## Start app
 1) Create `.env` file, example
 ```dotenv
-API_PORT=5000
+API_PORT=3001
 API_HOST=http://localhost:
 PG_CONNECTION=postgres
 PG_USERNAME=user1
@@ -66,9 +66,9 @@ npm run test
 ```
 
 ## API
-- SWAGGER on http://localhost:5000/swagger
-- REPORT on http://localhost:5000/report
-- REPORT by period on http://localhost:5000/report?dt_from=2022-02-13&dt_to=2022-02-28
+- SWAGGER on http://localhost:3001/swagger
+- REPORT on http://localhost:3001/report
+- REPORT by period on http://localhost:3001/report?dt_from=2022-02-13&dt_to=2022-02-28
 
 ## Demonstration
 ![gif](https://github.com/dmogilevtsev/nestjs-rent-car/blob/master/Rent%20Car.gif)
