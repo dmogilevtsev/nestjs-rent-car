@@ -51,7 +51,7 @@ docker-compose up -d
 
 <img height="80" alt="Postman" src="https://www.itsdelta.ru/upload/iblock/d41/d4164c9d28b9e2c11e347b5e477ab831.png"/>
 
-If you like test app with Postman - import `RENT CAR.postman_collection.json` to your Postman APP
+If you like test app with Postman - import `RENT CAR.postman_collection.json` to your Postman APP and create Envirenment `API_HOST` = http://localhost:3001
 
 ## TEST
 1) Clone this project to your repository
