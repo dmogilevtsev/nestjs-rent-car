@@ -28,7 +28,7 @@
 								},
 								{
 									"key": "car_id",
-									"value": "3",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -189,13 +189,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_HOST}}/discount/5",
+							"raw": "{{API_HOST}}/discount/3",
 							"host": [
 								"{{API_HOST}}"
 							],
 							"path": [
 								"discount",
-								"5"
+								"3"
 							]
 						}
 					},
@@ -229,7 +229,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_HOST}}/report?dt_from=2022-02-13&dt_to=2022-02-28",
+							"raw": "{{API_HOST}}/report?dt_from=2022-02-10&dt_to=2022-02-25",
 							"host": [
 								"{{API_HOST}}"
 							],
@@ -239,11 +239,11 @@
 							"query": [
 								{
 									"key": "dt_from",
-									"value": "2022-02-13"
+									"value": "2022-02-10"
 								},
 								{
 									"key": "dt_to",
-									"value": "2022-02-28"
+									"value": "2022-02-25"
 								}
 							]
 						}
