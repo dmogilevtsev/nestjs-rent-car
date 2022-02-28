@@ -19,26 +19,29 @@ export class ReportService {
         dt_to: Date,
         car_id?: number,
     ): Promise<IAverageCarLoadByDayResponse[]> {
-        const diff = differenceInDays(dt_to, dt_from) + 1;
+        const diff = differenceInDays(dt_to, dt_from);
         if (diff > MAX_DAY) {
             throw new HttpException(
                 `The maximum number of days must not exceed ${MAX_DAY}`,
                 HttpStatus.BAD_REQUEST,
             );
         }
-        const queryValues: any = [dt_from, dt_to];
+        const dtFrom = format(dt_from, 'yyyy-MM-dd');
+        const dtTo = format(dt_to, 'yyyy-MM-dd');
+        const queryValues: any = [dtFrom, dtTo];
         let whereCarIdQuery = '';
         if (car_id) {
             whereCarIdQuery = ' and a.id = $3 ';
             queryValues.push(car_id);
         }
-        const res = await this.db.executeQuery<IAverageCarLoadByDayResponse>(
-            `
+        const query = /* sql */ `
             select b.dt_from, b.dt_to, a.brand || ' ' || a.model as car
             from cars as a
             left join session as b on b.car_id = a.id
-            where (b.dt_from is null or (b.dt_from >= $1 and b.dt_from <= $2)) ${whereCarIdQuery}
-        `,
+            where (DATE(b.dt_from), DATE(b.dt_to)) OVERLAPS (DATE($1), DATE($2)) ${whereCarIdQuery}
+    `;
+        const res = await this.db.executeQuery<IAverageCarLoadByDayResponse>(
+            query,
             queryValues,
         );
         return res;
