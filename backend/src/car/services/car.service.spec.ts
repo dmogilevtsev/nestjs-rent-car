@@ -320,7 +320,7 @@ describe('[CLASS] CarService', () => {
             });
             it('Should be false', () => {
                 expect(() => {
-                    carService.periodLaseThenThirty(dt_from, dt_to);
+                    carService.periodLessThenThirty(dt_from, dt_to);
                 }).toThrow(/Maximum rental period exceeded/);
             });
         });
@@ -331,7 +331,7 @@ describe('[CLASS] CarService', () => {
             });
             it('Should be true', () => {
                 expect(
-                    carService.periodLaseThenThirty(dt_from, dt_to),
+                    carService.periodLessThenThirty(dt_from, dt_to),
                 ).toBeTruthy();
             });
         });

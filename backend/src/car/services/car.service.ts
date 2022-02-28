@@ -45,7 +45,7 @@ export class CarService {
 
         if (
             (!isWeekend(dt_from) || !isWeekend(dt_to)) &&
-            this.periodLaseThenThirty(dtFrom, dtTo) &&
+            this.periodLessThenThirty(dtFrom, dtTo) &&
             (await this.carIsAvailable(car_id, dtFrom))
         ) {
             const daysCount = differenceInDays(dtTo, dtFrom) + 1;
@@ -71,7 +71,7 @@ export class CarService {
         return percent ? total - total * (percent / 100) : total;
     }
 
-    periodLaseThenThirty(dt_from: Date, dt_to: Date): boolean {
+    periodLessThenThirty(dt_from: Date, dt_to: Date): boolean {
         if (differenceInDays(dt_to, dt_from) + 1 > MAX_DAY) {
             throw new HttpException(
                 'Maximum rental period exceeded',
