@@ -11,4 +11,9 @@ export class GetReportParamsDto {
         required: false,
     })
     dt_to?: Date;
+    @ApiProperty({
+        nullable: true,
+        required: false,
+    })
+    car_id?: number;
 }

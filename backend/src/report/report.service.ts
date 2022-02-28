@@ -17,6 +17,7 @@ export class ReportService {
     async averageCarLoadByDay(
         dt_from: Date,
         dt_to: Date,
+        car_id?: number,
     ): Promise<IAverageCarLoadByDayResponse[]> {
         const diff = differenceInDays(dt_to, dt_from) + 1;
         if (diff > MAX_DAY) {
@@ -25,26 +26,32 @@ export class ReportService {
                 HttpStatus.BAD_REQUEST,
             );
         }
+        const queryValues: any = [dt_from, dt_to];
+        let whereCarIdQuery = '';
+        if (car_id) {
+            whereCarIdQuery = ' and a.id = $3 ';
+            queryValues.push(car_id);
+        }
         const res = await this.db.executeQuery<IAverageCarLoadByDayResponse>(
             `
             select b.dt_from, b.dt_to, a.brand || ' ' || a.model as car
             from cars as a
             left join session as b on b.car_id = a.id
-            where b.dt_from is null or (b.dt_from >= $1 and b.dt_from <= $2)
+            where (b.dt_from is null or (b.dt_from >= $1 and b.dt_from <= $2)) ${whereCarIdQuery}
         `,
-            [dt_from, dt_to],
+            queryValues,
         );
         return res;
     }
 
-    async report(dt_from: Date, dt_to: Date) {
+    async report(dt_from: Date, dt_to: Date, car_id?: number) {
         if (dt_from > dt_to) {
             throw new HttpException(
                 'Date from can not be more then date to!',
                 HttpStatus.BAD_REQUEST,
             );
         }
-        const data = await this.averageCarLoadByDay(dt_from, dt_to);
+        const data = await this.averageCarLoadByDay(dt_from, dt_to, car_id);
 
         // Array of date by period
         const colDates: Date[] = [];
