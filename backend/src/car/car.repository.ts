@@ -19,15 +19,15 @@ export class CarRepository extends BaseRepository<Car> {
             getCarFromSession,
             [car_id, dt_from],
         );
-        if (car[0].count > 0) {
-            throw new HttpException(
-                'This car is in rent now.',
-                HttpStatus.BAD_REQUEST,
-            );
-        }
         if (isWeekend(dt_from)) {
             throw new HttpException(
                 "Can't rent on weekends.",
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+        if (car[0].count > 0) {
+            throw new HttpException(
+                'This car is in rent now.',
                 HttpStatus.BAD_REQUEST,
             );
         }
