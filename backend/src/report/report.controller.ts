@@ -1,3 +1,4 @@
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Res, Query } from '@nestjs/common';
 import { Response } from 'express';
 import { addDays } from 'date-fns';
@@ -6,10 +7,15 @@ import { MAX_DAY } from './../constants';
 import { ReportService } from './report.service';
 import { GetReportParamsDto } from './dto/get-report-params.dto';
 
+@ApiTags('Report controller')
 @Controller('report')
 export class ReportController {
     constructor(private readonly reportService: ReportService) {}
 
+    @ApiResponse({
+        status: 200,
+        description: 'Returned HTML report',
+    })
     @Get()
     async generateReport(
         @Res() res: Response,
