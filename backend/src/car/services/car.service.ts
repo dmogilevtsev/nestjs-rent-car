@@ -1,4 +1,4 @@
-import { differenceInDays, isWeekend } from 'date-fns';
+import { differenceInDays, isValid, isWeekend } from 'date-fns';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 import { DiscountService } from './../../discount/discount.service';
@@ -34,6 +34,9 @@ export class CarService {
         tariff_id,
         car_id,
     }: CreateSessionDto): Promise<number | null> {
+        if (!isValid(new Date(dt_from)) || !isValid(new Date(dt_to))) {
+            throw new HttpException('Incorrect date', HttpStatus.BAD_REQUEST);
+        }
         const dtFrom = new Date(dt_from);
         const dtTo = new Date(dt_to);
         if (dtFrom > dtTo) {
