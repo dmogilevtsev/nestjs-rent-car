@@ -35,13 +35,17 @@ export class SessionService {
                 HttpStatus.BAD_REQUEST,
             );
         }
-        if (await this.carService.carIsAvailable(car_id, dtFrom)) {
-            if (isWeekend(dtFrom) || isWeekend(dtTo)) {
-                throw new HttpException(
-                    `You can't rent a car on weekends`,
-                    HttpStatus.BAD_REQUEST,
-                );
-            }
+        if (isWeekend(dtFrom) || isWeekend(dtTo)) {
+            throw new HttpException(
+                `You can't rent a car on weekends`,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+
+        const carIsAvailable =
+            (await this.carService.carIsAvailable(car_id, dtFrom)) || false;
+
+        if (carIsAvailable) {
             try {
                 if (!(await this.carService.getOneCar(car_id))) {
                     throw new HttpException(
