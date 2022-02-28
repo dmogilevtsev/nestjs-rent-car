@@ -39,12 +39,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3001/session",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/session",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"session"
 							]
@@ -58,12 +56,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/session",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/session",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"session"
 							]
@@ -77,12 +73,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/session/1",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/session/1",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"session",
 								"1"
@@ -102,12 +96,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/car",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/car",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"car"
 							]
@@ -121,12 +113,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/car/3",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/car/3",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"car",
 								"3"
@@ -141,12 +131,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/car/rent-price?dt_from=2022-03-01&dt_to=2022-03-03&car_id=5&tariff_id=2",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/car/rent-price?dt_from=2022-03-01&dt_to=2022-03-03&car_id=5&tariff_id=2",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"car",
 								"rent-price"
@@ -184,12 +172,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/discount",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/discount",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"discount"
 							]
@@ -203,12 +189,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/discount/5",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/discount/5",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"discount",
 								"5"
@@ -228,12 +212,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/report",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/report",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"report"
 							]
@@ -247,12 +229,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/report?dt_from=2022-02-13&dt_to=2022-02-28",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/report?dt_from=2022-02-13&dt_to=2022-02-28",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"report"
 							],
@@ -264,6 +244,37 @@
 								{
 									"key": "dt_to",
 									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report by period and car",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_HOST}}/report?dt_from=2022-02-13&dt_to=2022-02-28&car_id=1",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"report"
+							],
+							"query": [
+								{
+									"key": "dt_from",
+									"value": "2022-02-13"
+								},
+								{
+									"key": "dt_to",
+									"value": "2022-02-28"
+								},
+								{
+									"key": "car_id",
+									"value": "1"
 								}
 							]
 						}
@@ -281,12 +292,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/tariff",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/tariff",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"tariff"
 							]
@@ -300,12 +309,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/tariff/2",
-							"protocol": "http",
+							"raw": "{{API_HOST}}/tariff/2",
 							"host": [
-								"localhost"
+								"{{API_HOST}}"
 							],
-							"port": "3001",
 							"path": [
 								"tariff",
 								"2"
