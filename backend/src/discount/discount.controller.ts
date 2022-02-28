@@ -10,7 +10,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { IDiscount } from './discount.interface';
 import { DiscountService } from './discount.service';
 
-const MIN_COUNT_DAYS = 4;
+const MIN_COUNT_DAYS = 3;
 const MAX_COUNT_DAYS = 30;
 
 @ApiTags('Discount Controller')
