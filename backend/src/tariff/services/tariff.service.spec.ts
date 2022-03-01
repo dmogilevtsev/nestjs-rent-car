@@ -4,7 +4,7 @@ import { TariffRepository } from './../tariff.repository';
 import { ITariff } from '../entities/tarif.interface';
 import { TariffService } from './tariff.service';
 
-const tariffsMock: ITariff[] = [{ id: 1, price: 270, kmPerDay: 200 }];
+const tariffsMock: ITariff[] = [{ id: 1, price: 270, kmperday: 200 }];
 
 const TariffRepositoryMock = {
     getOneTariff: jest.fn((id: number): ITariff => tariffsMock[0]),

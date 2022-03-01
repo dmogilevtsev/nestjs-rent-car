@@ -41,7 +41,7 @@ const TariffServiceMock = {
         (tariff_id: number): ITariff => ({
             id: 1,
             price: 270,
-            kmPerDay: 200,
+            kmperday: 200,
         }),
     ),
 };

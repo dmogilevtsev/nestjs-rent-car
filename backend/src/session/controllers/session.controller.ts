@@ -39,6 +39,10 @@ export class SessionController {
         return await this.sessionService.getAllSessions();
     }
 
+    @ApiResponse({
+        status: 200,
+        description: 'Delete session by id',
+    })
     @Delete(':id')
     async deleteSession(@Param('id') id: number): Promise<ISession> {
         return await this.sessionService.deleteSession(id);

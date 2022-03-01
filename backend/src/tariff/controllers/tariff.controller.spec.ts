@@ -7,7 +7,7 @@ import { TariffController } from './tariff.controller';
 const tariffsMock: ITariff[] = [
     {
         id: 1,
-        kmPerDay: 200,
+        kmperday: 200,
         price: 270,
     },
 ];
