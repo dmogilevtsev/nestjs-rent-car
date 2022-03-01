@@ -84,6 +84,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "delete session",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_HOST}}/session/10",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"session",
+								"10"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
