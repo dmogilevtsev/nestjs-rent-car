@@ -1,6 +1,7 @@
-import { ITariff } from './../entities/tarif.interface';
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { TariffService } from '../services/tariff.service';
+import { ITariff } from './../entities/tarif.interface';
 import { TariffController } from './tariff.controller';
 
 const tariffsMock: ITariff[] = [

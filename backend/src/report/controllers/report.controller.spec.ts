@@ -1,6 +1,7 @@
-import { ReportController } from './report.controller';
-import { ReportService } from '../services/report.service';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { ReportService } from '../services/report.service';
+import { ReportController } from './report.controller';
 
 const ReportServiceMock = {
     report: (dt1?: Date, dt2?: Date, car_id?: number): string => 'HTML',

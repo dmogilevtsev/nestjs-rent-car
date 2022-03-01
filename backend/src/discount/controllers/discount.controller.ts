@@ -1,8 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { IDiscount } from '../entities/discount.interface';
 import { DiscountService } from '../services/discount.service';
+import { IDiscount } from '../entities/discount.interface';
 
 @ApiTags('Discount Controller')
 @Controller('discount')

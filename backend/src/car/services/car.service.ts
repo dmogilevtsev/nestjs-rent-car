@@ -1,13 +1,13 @@
-import { CreateCarDto } from './../dto/create-car.dto';
 import { differenceInDays, isValid, isWeekend } from 'date-fns';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
+import { DiscountService } from '../../discount/services/discount.service';
 import { CreateSessionDto } from '../../session/dto/create-session.dto';
 import { TariffService } from '../../tariff/services/tariff.service';
+import { CreateCarDto } from './../dto/create-car.dto';
 import { CarRepository } from './../car.repository';
 import { ICar } from './../entities/car.interface';
 import { MAX_DAY } from './../../constants';
-import { DiscountService } from '../../discount/services/discount.service';
 
 @Injectable()
 export class CarService {

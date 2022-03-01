@@ -1,5 +1,6 @@
-import { DatabaseService } from './../db/database.service';
 import { Injectable, Logger } from '@nestjs/common';
+
+import { DatabaseService } from './../db/database.service';
 import { ISession } from './entities/session.interface';
 
 @Injectable()

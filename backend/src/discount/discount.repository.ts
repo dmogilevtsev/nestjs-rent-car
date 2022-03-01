@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { DatabaseService } from '../db/database.service';
+
 import { IDiscount } from './entities/discount.interface';
+import { DatabaseService } from '../db/database.service';
 
 @Injectable()
 export class DiscountRepository {

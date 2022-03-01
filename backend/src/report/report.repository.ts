@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { DatabaseService } from './../db/database.service';
 import { IAverageCarLoadByDayResponse } from './reposrt.interface';
+import { DatabaseService } from './../db/database.service';
 
 @Injectable()
 export class ReportRepository {

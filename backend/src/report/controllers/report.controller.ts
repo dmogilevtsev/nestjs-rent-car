@@ -1,11 +1,11 @@
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Res, Query } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { addDays } from 'date-fns';
 
-import { MAX_DAY } from '../../constants';
-import { ReportService } from '../services/report.service';
 import { GetReportParamsDto } from '../dto/get-report-params.dto';
+import { ReportService } from '../services/report.service';
+import { MAX_DAY } from '../../constants';
 
 @ApiTags('Report controller')
 @Controller('report')

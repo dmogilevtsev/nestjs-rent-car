@@ -1,7 +1,8 @@
-import { ReportRepository } from './../report.repository';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ReportService } from './report.service';
+
 import { IAverageCarLoadByDayResponse } from './../reposrt.interface';
+import { ReportRepository } from './../report.repository';
+import { ReportService } from './report.service';
 
 const averageCarLoadByDayData: IAverageCarLoadByDayResponse[] = [
     {

@@ -1,10 +1,10 @@
-import { CreateCarDto } from './../dto/create-car.dto';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
 
 import { CreateSessionDto } from '../../session/dto/create-session.dto';
+import { CreateCarDto } from './../dto/create-car.dto';
 import { CarService } from './../services/car.service';
 import { ICar } from './../entities/car.interface';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Car Controller')
 @Controller('car')

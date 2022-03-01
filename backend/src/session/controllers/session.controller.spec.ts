@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { ISession } from './../entities/session.interface';
 import { CreateSessionDto } from './../dto/create-session.dto';
 import { SessionService } from './../services/session.service';
+import { ISession } from './../entities/session.interface';
 import { SessionController } from './session.controller';
 
 const sessionMock: ISession[] = [

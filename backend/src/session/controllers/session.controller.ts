@@ -1,9 +1,9 @@
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { ISession } from '../entities/session.interface';
 import { SessionService } from '../services/session.service';
 import { CreateSessionDto } from '../dto/create-session.dto';
+import { ISession } from '../entities/session.interface';
 
 @ApiTags('Session controller')
 @Controller('session')

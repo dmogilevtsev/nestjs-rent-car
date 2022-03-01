@@ -1,6 +1,7 @@
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { CreateSessionDto } from './../../session/dto/create-session.dto';
 import { CreateCarDto } from './../dto/create-car.dto';
-import { Test, TestingModule } from '@nestjs/testing';
 import { CarService } from './../services/car.service';
 import { CarController } from './car.controller';
 import { ICar } from '../entities/car.interface';

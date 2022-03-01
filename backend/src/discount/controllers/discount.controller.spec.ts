@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { IDiscount } from './../entities/discount.interface';
 import { DiscountService } from './../services/discount.service';
+import { IDiscount } from './../entities/discount.interface';
 import { DiscountController } from './discount.controller';
 
 const discountMockData: IDiscount[] = [

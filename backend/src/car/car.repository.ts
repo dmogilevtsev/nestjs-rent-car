@@ -2,9 +2,9 @@ import { isWeekend } from 'date-fns';
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 
 import { DatabaseService } from './../db/database.service';
+import { CreateCarDto } from './dto/create-car.dto';
 import { ICar } from './entities/car.interface';
 import { Car } from './entities/car.entity';
-import { CreateCarDto } from './dto/create-car.dto';
 
 @Injectable()
 export class CarRepository {

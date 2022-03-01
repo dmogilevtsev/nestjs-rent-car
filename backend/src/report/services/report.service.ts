@@ -1,4 +1,3 @@
-import { ReportRepository } from './../report.repository';
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import {
     addDays,
@@ -13,6 +12,7 @@ import {
     IAverageCarLoadByDayResponse,
     ICarWithDates,
 } from '../reposrt.interface';
+import { ReportRepository } from './../report.repository';
 import { MAX_DAY } from '../../constants';
 
 @Injectable()

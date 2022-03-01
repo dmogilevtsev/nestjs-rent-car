@@ -1,4 +1,3 @@
-import { SessionRepository } from './../session.repository';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { differenceInDays, isValid, isWeekend } from 'date-fns';
 
@@ -6,6 +5,7 @@ import { DiscountService } from '../../discount/services/discount.service';
 import { TariffService } from '../../tariff/services/tariff.service';
 import { CreateSessionDto } from '../dto/create-session.dto';
 import { CarService } from '../../car/services/car.service';
+import { SessionRepository } from './../session.repository';
 import { ISession } from '../entities/session.interface';
 
 @Injectable()
