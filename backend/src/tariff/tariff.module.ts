@@ -1,12 +1,11 @@
+import { TariffRepository } from './tariff.repository';
 import { Module } from '@nestjs/common';
 
-import { TariffController } from './tariff.controller';
-import { TariffService } from './tariff.service';
-import { DbModule } from './../db/db.module';
+import { TariffController } from './controllers/tariff.controller';
+import { TariffService } from './services/tariff.service';
 
 @Module({
-    imports: [DbModule],
     controllers: [TariffController],
-    providers: [TariffService],
+    providers: [TariffService, TariffRepository],
 })
 export class TariffModule {}
