@@ -1,12 +1,12 @@
-import { CreateSessionDto } from './../src/session/dto/create-session.dto';
-import { CreateCarDto } from './../src/car/dto/create-car.dto';
+import { NestApplication } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { Car } from '../src/car/entities/car.entity';
-import { ICar } from '../src/car/entities/car.interface';
+import { CreateSessionDto } from './../src/session/dto/create-session.dto';
 import { CarController } from '../src/car/controllers/car.controller';
+import { CreateCarDto } from './../src/car/dto/create-car.dto';
+import { ICar } from '../src/car/entities/car.interface';
+import { Car } from '../src/car/entities/car.entity';
 import { AppModule } from '../src/app.module';
-import { NestApplication } from '@nestjs/core';
 
 describe('[E2E Tests] CarController', () => {
     let app: NestApplication;
