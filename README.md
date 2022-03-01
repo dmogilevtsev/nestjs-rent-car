@@ -87,6 +87,7 @@ npm install
 3) Run test
 ```
 npm run test
+npm run test:e2e
 ```
 
 ## API
