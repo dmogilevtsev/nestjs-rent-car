@@ -18,17 +18,17 @@
 							"urlencoded": [
 								{
 									"key": "dt_from",
-									"value": "2022-05-11",
+									"value": "2022-03-07",
 									"type": "text"
 								},
 								{
 									"key": "dt_to",
-									"value": "2022-05-18",
+									"value": "2022-03-11",
 									"type": "text"
 								},
 								{
 									"key": "car_id",
-									"value": "1",
+									"value": "5",
 									"type": "text"
 								},
 								{
@@ -131,7 +131,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_HOST}}/car/rent-price?dt_from=2022-03-01&dt_to=2022-03-03&car_id=5&tariff_id=2",
+							"raw": "{{API_HOST}}/car/rent-price?dt_from=2022-03-01&dt_to=2022-03-03&car_id=1&tariff_id=2",
 							"host": [
 								"{{API_HOST}}"
 							],
@@ -150,12 +150,54 @@
 								},
 								{
 									"key": "car_id",
-									"value": "5"
+									"value": "1"
 								},
 								{
 									"key": "tariff_id",
 									"value": "2"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create car",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "brand",
+									"value": "Volvo",
+									"type": "text"
+								},
+								{
+									"key": "model",
+									"value": "XC 90",
+									"type": "text"
+								},
+								{
+									"key": "gos",
+									"value": "А123АА123",
+									"type": "text"
+								},
+								{
+									"key": "vin",
+									"value": "1234567890",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_HOST}}/car",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"car"
 							]
 						}
 					},
