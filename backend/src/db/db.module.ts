@@ -1,4 +1,4 @@
-import { Logger, Module, OnApplicationShutdown } from '@nestjs/common';
+import { Global, Logger, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
 import { Pool } from 'pg';
@@ -14,6 +14,7 @@ const databasePoolFactory = async (config: ConfigService) => {
     });
 };
 
+@Global()
 @Module({
     imports: [],
     controllers: [],
