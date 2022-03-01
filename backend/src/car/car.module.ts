@@ -1,15 +1,22 @@
+import { TariffRepository } from './../tariff/tariff.repository';
 import { Module } from '@nestjs/common';
 
-import { CarRepository } from './car.repository';
-import { DiscountService } from './../discount/discount.service';
-import { DbModule } from './../db/db.module';
+import { DiscountService } from 'src/discount/services/discount.service';
+import { DiscountRepository } from './../discount/discount.repository';
+import { TariffService } from '../tariff/services/tariff.service';
 import { CarController } from './controllers/car.controller';
 import { CarService } from './services/car.service';
-import { TariffService } from './../tariff/tariff.service';
+import { CarRepository } from './car.repository';
 
 @Module({
-    imports: [DbModule],
     controllers: [CarController],
-    providers: [CarService, TariffService, DiscountService, CarRepository],
+    providers: [
+        CarService,
+        CarRepository,
+        TariffService,
+        DiscountService,
+        DiscountRepository,
+        TariffRepository,
+    ],
 })
 export class CarModule {}
