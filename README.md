@@ -10,28 +10,28 @@ A backend app that provides a set of functionality related to cars rent.
 ## Technology stack
 <table width="100%">
   <tr>
-    <td align="center" valign="middle" width="16%">
+    <td align="center" valign="middle" width="14%">
       <a href="https://nestjs.com/">
         <img height="50" alt="NestJS" src="https://hsto.org/getpro/habr/post_images/d11/98b/ac8/d1198bac8e4ced0d89d5e5983061f418.png"/>
       </a>
       <br />
       NestJS
     </td>
-    <td align="center" valign="middle" width="16%">
+    <td align="center" valign="middle" width="14%">
       <a href="https://www.postgresql.org/">
       <img height="50" alt="PostgresSQL" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/640px-Postgresql_elephant.svg.png"/>
       </a>
       <br />
       PostgresSQL
     </td>
-    <td align="center" valign="middle" width="16%">
+    <td align="center" valign="middle" width="14%">
       <a href="https://www.docker.com/">
       <img height="50" alt="Docker" src="https://d1.awsstatic.com/acs/characters/Logos/Docker-Logo_Horizontel_279x131.b8a5c41e56b77706656d61080f6a0217a3ba356d.png"/>
       </a>
       <br />
       Docker
     </td>
-    <td align="center" valign="middle" width="16%">
+    <td align="center" valign="middle" width="14%">
       <a href="https://jestjs.io/ru/">
       <img height="50" alt="Jest" src="https://jestjs.io/ru/img/opengraph.png"/>
       </a>
@@ -51,6 +51,13 @@ A backend app that provides a set of functionality related to cars rent.
       </a>
       <br />
       ChartJS
+    </td>
+    <td align="center" valign="middle" width="14%">
+      <a href="https://getbootstrap.com/">
+      <img height="50" alt="Bootstrap" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/1200px-Bootstrap_logo.svg.png"/>
+      </a>
+      <br />
+      Bootstrap
     </td>
   </tr>
 </table>
