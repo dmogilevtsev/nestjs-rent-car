@@ -1,12 +1,13 @@
+import { CreateCarDto } from './../dto/create-car.dto';
 import { differenceInDays, isValid, isWeekend } from 'date-fns';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
-import { DiscountService } from './../../discount/discount.service';
-import { CreateSessionDto } from './../dto/create-session.dto';
-import { TariffService } from './../../tariff/tariff.service';
+import { CreateSessionDto } from '../../session/dto/create-session.dto';
+import { TariffService } from '../../tariff/services/tariff.service';
 import { CarRepository } from './../car.repository';
 import { ICar } from './../entities/car.interface';
 import { MAX_DAY } from './../../constants';
+import { DiscountService } from '../../discount/services/discount.service';
 
 @Injectable()
 export class CarService {
@@ -45,11 +46,17 @@ export class CarService {
                 HttpStatus.BAD_REQUEST,
             );
         }
+        if (isWeekend(dtFrom) || isWeekend(dtTo)) {
+            throw new HttpException(
+                `You can't rent a car on weekends`,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
 
         if (
             (!isWeekend(dt_from) || !isWeekend(dt_to)) &&
             this.periodLessThenThirty(dtFrom, dtTo) &&
-            (await this.carIsAvailable(car_id, dtFrom))
+            (await this.repo.carIsAvailable(car_id, dt_from))
         ) {
             const daysCount = differenceInDays(dtTo, dtFrom) + 1;
             const tariff = await this.tariffService.getOneTariff(tariff_id);
@@ -82,5 +89,9 @@ export class CarService {
             );
         }
         return true;
+    }
+
+    async createCar(car: CreateCarDto): Promise<ICar> {
+        return await this.repo.create(car);
     }
 }
