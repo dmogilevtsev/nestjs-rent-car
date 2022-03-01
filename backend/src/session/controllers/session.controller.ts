@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { SessionService } from '../services/session.service';
@@ -37,5 +37,10 @@ export class SessionController {
     @Get()
     async getSessions(): Promise<ISession[]> {
         return await this.sessionService.getAllSessions();
+    }
+
+    @Delete(':id')
+    async deleteSession(@Param('id') id: number): Promise<ISession> {
+        return await this.sessionService.deleteSession(id);
     }
 }

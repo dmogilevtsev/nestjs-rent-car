@@ -93,4 +93,8 @@ export class SessionService {
     async getAllSessions(): Promise<ISession[]> {
         return await this.repo.getSessions();
     }
+
+    async deleteSession(id: number): Promise<ISession> {
+        return await this.repo.deleteSession(id);
+    }
 }

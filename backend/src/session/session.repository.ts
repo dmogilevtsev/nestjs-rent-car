@@ -54,4 +54,16 @@ export class SessionRepository {
             this.log.warn('[getSessions]', error);
         }
     }
+
+    async deleteSession(id: number): Promise<ISession> {
+        try {
+            const query = /* sql */ `delete from session where id = $1 RETURNING id, dt_from, dt_to, car_id, discount_id, tariff_id, cost;`;
+            const deletedSession = await this.db.executeQuery<ISession>(query, [
+                id,
+            ]);
+            return deletedSession[0];
+        } catch (error) {
+            this.log.warn('[deleteSession]', error);
+        }
+    }
 }
