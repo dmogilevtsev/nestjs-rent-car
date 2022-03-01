@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c8ac938b-99c2-4e42-bc2f-9dd4b7a85425",
+		"_postman_id": "197fa570-569a-487b-838d-b8dee289e683",
 		"name": "RENT CAR",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -131,7 +131,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_HOST}}/car/rent-price?dt_from=2022-03-01&dt_to=2022-03-03&car_id=1&tariff_id=2",
+							"raw": "{{API_HOST}}/car/rent-price?dt_from=2022-03-01&dt_to=2022-03-03&car_id=2&tariff_id=2",
 							"host": [
 								"{{API_HOST}}"
 							],
@@ -150,7 +150,7 @@
 								},
 								{
 									"key": "car_id",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "tariff_id",
