@@ -1,12 +1,11 @@
+import { DiscountRepository } from './discount.repository';
 import { Module } from '@nestjs/common';
 
-import { DiscountController } from './discount.controller';
-import { DiscountService } from './discount.service';
-import { DbModule } from './../db/db.module';
+import { DiscountController } from './controllers/discount.controller';
+import { DiscountService } from './services/discount.service';
 
 @Module({
-    imports: [DbModule],
     controllers: [DiscountController],
-    providers: [DiscountService],
+    providers: [DiscountService, DiscountRepository],
 })
 export class DiscountModule {}
