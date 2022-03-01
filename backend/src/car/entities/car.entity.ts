@@ -5,5 +5,5 @@ export class Car implements ICar {
     brand: string;
     model: string;
     gos: string;
-    VIN: string;
+    vin: string;
 }

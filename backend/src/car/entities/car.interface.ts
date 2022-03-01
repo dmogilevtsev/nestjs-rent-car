@@ -3,5 +3,5 @@ export interface ICar {
     brand: string;
     model: string;
     gos: string;
-    VIN: string;
+    vin: string;
 }
