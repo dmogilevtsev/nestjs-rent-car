@@ -1,113 +1,89 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
-import { isAfter, addDays, isBefore, isWeekend } from 'date-fns';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { DiscountService } from './../../discount/discount.service';
-import { DatabaseService } from './../../db/database.service';
-import { TariffService } from './../../tariff/tariff.service';
-import { ISession } from './../../session/session.interface';
+import { ITariff } from '../../tariff/entities/tarif.interface';
+import { CreateCarDto } from '../dto/create-car.dto';
+import { TariffService } from '../../tariff/services/tariff.service';
 import { CarRepository } from './../car.repository';
 import { ICar } from './../entities/car.interface';
-import { Car } from '../entities/car.entity';
 import { CarService } from './car.service';
+import { Car } from '../entities/car.entity';
+import { DiscountService } from '../../discount/services/discount.service';
+import { IDiscount } from '../../discount/entities/discount.interface';
 
-const cars: ICar[] = [
+const mockCars: ICar[] = [
     {
         id: 1,
         brand: 'Audi',
         model: 'A2',
         gos: 'А121АА123',
-        VIN: '4Y1SL65848Z411435',
+        vin: '4Y1SL65848Z411435',
     },
     {
         id: 2,
         brand: 'Audi',
         model: 'A3',
         gos: 'А122АА123',
-        VIN: '4Y1SL65848Z411436',
-    },
-    {
-        id: 3,
-        brand: 'Audi',
-        model: 'A4',
-        gos: 'А123АА123',
-        VIN: '4Y1SL65848Z411437',
-    },
-    {
-        id: 4,
-        brand: 'Audi',
-        model: 'A5',
-        gos: 'А124АА123',
-        VIN: '4Y1SL65848Z411438',
-    },
-    {
-        id: 5,
-        brand: 'Audi',
-        model: 'A6',
-        gos: 'А125АА123',
-        VIN: '4Y1SL65848Z411439',
+        vin: '4Y1SL65848Z411436',
     },
 ];
 
-const carInSession: ISession[] = [
-    {
-        id: 1,
-        car_id: 3,
-        discount_id: 1,
-        dt_from: new Date('2022-02-21'),
-        dt_to: new Date('2022-02-25'),
-        tariff_id: 1,
-        cost: 1282.5,
-    },
-];
+const mockNewCar: ICar = {
+    id: 3,
+    brand: 'Volvo',
+    model: 'XC 90',
+    gos: 'А123АА123',
+    vin: '1234567890',
+};
 
-const mockCarService = {
-    getAllCars: jest.fn((): Car[] => cars),
-    getOneCar: jest.fn((id: number): Car => cars.find(car => car.id === id)),
-    carIsAvailable: jest.fn((car_id: number, dt_from: Date): boolean => {
-        if (
-            carInSession.filter(
-                car =>
-                    car.car_id === car_id &&
-                    isAfter(dt_from, addDays(car.dt_from, -1)) &&
-                    isBefore(dt_from, addDays(car.dt_to, 1)),
-            ).length > 0 ||
-            isWeekend(dt_from)
-        ) {
-            throw new HttpException(
-                'This car is in rent now.',
-                HttpStatus.BAD_REQUEST,
-            );
-        }
-        return true;
-    }),
+const CarRepositoryMock = {
+    create: jest.fn(
+        ({ brand, model, gos, vin }: CreateCarDto): ICar => mockNewCar,
+    ),
+    findAll: jest.fn((): ICar[] => mockCars),
+    findOne: jest.fn((id: number): ICar => mockCars[0]),
+    carIsAvailable: (car_id: number, dt_from: Date) => true,
+};
+
+const TariffServiceMock = {
+    getOneTariff: jest.fn(
+        (tariff_id: number): ITariff => ({
+            id: 1,
+            price: 270,
+            kmPerDay: 200,
+        }),
+    ),
+};
+
+const DiscountServiceMock = {
+    getOneDiscount: jest.fn(
+        (daysCount: number): IDiscount => ({
+            id: 1,
+            percent: 5,
+            day_from: 3,
+            day_to: 5,
+        }),
+    ),
 };
 
 describe('[CLASS] CarService', () => {
-    let carServiceMock: CarService;
     let carService: CarService;
-    let carReposirory: CarRepository;
-    let tariffService: TariffService;
-    let discountService: DiscountService;
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [CarService],
+            providers: [
+                CarService,
+                CarRepository,
+                TariffService,
+                DiscountService,
+            ],
         })
-            .overrideProvider(CarService)
-            .useValue(mockCarService)
+            .overrideProvider(CarRepository)
+            .useValue(CarRepositoryMock)
+            .overrideProvider(TariffService)
+            .useValue(TariffServiceMock)
+            .overrideProvider(DiscountService)
+            .useValue(DiscountServiceMock)
             .compile();
-        carServiceMock = module.get<CarService>(CarService);
-        carReposirory = new CarRepository({} as DatabaseService);
-        tariffService = new TariffService({} as DatabaseService);
-        discountService = new DiscountService({} as DatabaseService);
-        carService = new CarService(
-            carReposirory,
-            tariffService,
-            discountService,
-        );
-    });
-    it('CarService MOCK should be defined', () => {
-        expect(carServiceMock).toBeDefined();
+        carService = module.get(CarService);
     });
     it('CarService should be defined', () => {
         expect(carService).toBeDefined();
@@ -115,7 +91,7 @@ describe('[CLASS] CarService', () => {
     describe('[METHOD] getAllCars', () => {
         let _cars: ICar[] = [];
         beforeEach(async () => {
-            _cars = await carServiceMock.getAllCars();
+            _cars = await carService.getAllCars();
         });
         it('should returned cars typeof Car', () => {
             expect(_cars).toMatchObject<ICar>(new Car());
@@ -125,51 +101,82 @@ describe('[CLASS] CarService', () => {
         let id: number;
         let _car: ICar;
         beforeEach(async () => {
-            id = 2;
-            _car = await carServiceMock.getOneCar(id);
+            _car = await carService.getOneCar(1);
         });
         it('the returned value not falsy', () => {
             expect(_car).not.toBeFalsy();
         });
         it(`the returned value must be equal the array element with the same id`, () => {
-            const car = cars.find(car => car.id === id);
-            expect(_car).toEqual(car);
+            expect(_car?.id).toBe(1);
         });
     });
-    describe('[METHOD] carIsAvailable', () => {
-        let car_id: number;
-        let dt_from: Date;
-        describe('(2022-02-21)', () => {
+    describe('[METHOD] rentPrice', () => {
+        let dtFrom: Date;
+        let dtTo: Date;
+        describe('dateFrom: 2022-05-01, dateTo: 2022-05-35', () => {
             beforeEach(() => {
-                car_id = 3;
-                dt_from = new Date('2022-02-21');
+                dtFrom = new Date('2022-05-01');
+                dtTo = new Date('2022-05-35');
             });
-            it('Should return error "This car is in rent now."', () => {
-                expect(() =>
-                    carServiceMock.carIsAvailable(car_id, dt_from),
-                ).toThrow(/This car is in rent now./);
+            it('should be error "Incorrect date"', async () => {
+                await expect(
+                    async () =>
+                        await carService.rentPrice({
+                            dt_from: dtFrom,
+                            dt_to: dtTo,
+                            tariff_id: 1,
+                            car_id: 1,
+                        }),
+                ).rejects.toThrow(/Incorrect date/);
             });
         });
-        describe('(2022-02-26)', () => {
+        describe('dateFrom: 2022-05-20, dateTo: 2022-05-10', () => {
             beforeEach(() => {
-                car_id = 3;
-                dt_from = new Date('2022-02-26');
+                dtFrom = new Date('2022-05-20');
+                dtTo = new Date('2022-05-10');
             });
-            it('Should return error "This car is in rent now." becouse it weekend', () => {
-                expect(() =>
-                    carServiceMock.carIsAvailable(car_id, dt_from),
-                ).toThrow(/This car is in rent now./);
+            it('should be error "Date from can not be more then date to!"', async () => {
+                await expect(
+                    async () =>
+                        await carService.rentPrice({
+                            dt_from: dtFrom,
+                            dt_to: dtTo,
+                            tariff_id: 1,
+                            car_id: 1,
+                        }),
+                ).rejects.toThrow(/Date from can not be more then date to!/);
             });
         });
-        describe('(2022-02-28)', () => {
+        describe('dateFrom: 2022-05-07, dateTo: 2022-05-08', () => {
             beforeEach(() => {
-                car_id = 3;
-                dt_from = new Date('2022-02-28');
+                dtFrom = new Date('2022-05-07');
+                dtTo = new Date('2022-05-08');
             });
-            it('Should return true', () => {
-                expect(
-                    carServiceMock.carIsAvailable(car_id, dt_from),
-                ).toBeTruthy();
+            it('should be error "You can\'t rent a car on weekends"', async () => {
+                await expect(
+                    async () =>
+                        await carService.rentPrice({
+                            dt_from: dtFrom,
+                            dt_to: dtTo,
+                            tariff_id: 1,
+                            car_id: 1,
+                        }),
+                ).rejects.toThrow(/You can't rent a car on weekends/);
+            });
+        });
+        describe('dateFrom: 2022-05-02, dateTo: 2022-05-05', () => {
+            beforeEach(() => {
+                dtFrom = new Date('2022-05-02');
+                dtTo = new Date('2022-05-05');
+            });
+            it('should be return 1026', async () => {
+                const result = await carService.rentPrice({
+                    dt_from: dtFrom,
+                    dt_to: dtTo,
+                    tariff_id: 1,
+                    car_id: 1,
+                });
+                expect(result).toBe(1026);
             });
         });
     });
@@ -310,7 +317,7 @@ describe('[CLASS] CarService', () => {
             });
         });
     });
-    describe('[METHOD] periodLaseThenThirty', () => {
+    describe('[METHOD] periodLessThenThirty', () => {
         let dt_from: Date;
         let dt_to: Date;
         describe('from 2022-02-28 - to 2022-04-04', () => {
@@ -334,6 +341,34 @@ describe('[CLASS] CarService', () => {
                     carService.periodLessThenThirty(dt_from, dt_to),
                 ).toBeTruthy();
             });
+        });
+    });
+    describe('[METHOD] carIsAvailable', () => {
+        it('Should be true', async () => {
+            const result = await carService.carIsAvailable(
+                1,
+                new Date('2022-05-02'),
+            );
+            expect(result).toBeTruthy();
+        });
+    });
+    describe('[METHOD] createCar', () => {
+        let car: CreateCarDto;
+        beforeEach(() => {
+            car = {
+                brand: 'Volvo',
+                model: 'XC 90',
+                gos: 'А123АА123',
+                vin: '1234567890',
+            };
+        });
+        it('Should be returned id = 3', async () => {
+            const result = await carService.createCar(car);
+            expect(result?.id).toBe(3);
+        });
+        it('Should be equal mockNewCar', async () => {
+            const result = await carService.createCar(car);
+            expect(result).toEqual(mockNewCar);
         });
     });
 });
