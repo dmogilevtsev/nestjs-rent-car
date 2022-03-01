@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { CreateCarDto } from './../dto/create-car.dto';
+import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
 
-import { CreateSessionDto } from './../dto/create-session.dto';
+import { CreateSessionDto } from '../../session/dto/create-session.dto';
 import { CarService } from './../services/car.service';
 import { ICar } from './../entities/car.interface';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
@@ -37,5 +38,14 @@ export class CarController {
     @Get(':id')
     async getOneCar(@Param('id') id: number): Promise<ICar> {
         return await this.carService.getOneCar(id);
+    }
+
+    @ApiResponse({
+        status: 201,
+        description: 'Create new car',
+    })
+    @Post()
+    async createCar(@Body() car: CreateCarDto): Promise<ICar> {
+        return await this.carService.createCar(car);
     }
 }
